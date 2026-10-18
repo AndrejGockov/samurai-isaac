@@ -1,16 +1,30 @@
 using UnityEngine;
 
-public class NewMonoBehaviourScript : MonoBehaviour
+public class BasePlayer : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    private Rigidbody2D rigidBody2D;
+    private Vector2 moveInput;
+
+    [SerializeField]
+    private float movementSpeed = 7.5f;
+
     void Start()
     {
-        
+        rigidBody2D = GetComponent<Rigidbody2D>();
+        rigidBody2D.gravityScale = 0f;
     }
 
-    // Update is called once per frame
     void Update()
     {
+        Move();
+    }
+
+    private void Move()
+    {
+        if (UserInput.instance == null) 
+            return;
         
+        moveInput = UserInput.instance.moveInput;
+        rigidBody2D.linearVelocity = moveInput * movementSpeed;
     }
 }
